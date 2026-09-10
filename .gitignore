@@ -1,0 +1,12 @@
+.build/
+Output/
+.swiftpm/
+.publish/
+.DS_Store
+
+# Globálny ~/.gitignore_global vylučuje Package.resolved, ale tu ho chceme
+# verzionovať — CI z neho robí cache kľúč a potrebuje reprodukovateľný build.
+!Package.resolved
+
+# Interná dokumentácia projektu — repo je verejné, toto tam nepatrí.
+CLAUDE.md

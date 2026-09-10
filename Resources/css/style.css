@@ -1,0 +1,219 @@
+/* Minimalistický typografický theme.
+   Farby sú výhradne v premenných nižšie — komponenty siahajú len na ne,
+   aby svetlá aj tmavá schéma zostali konzistentné. */
+
+:root {
+  --paper: #ffffff;
+  --ink: #12130f;
+  --grey: #6f7268;
+  --rule: #e6e6e0;
+  --mark: #1b4d3e;
+  --mark-underline: #b9cfc7;
+
+  --measure: 34rem;      /* ~65 znakov bežného textu */
+  --step: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121310;
+    --ink: #e9e8e0;
+    --grey: #949688;
+    --rule: #2a2b26;
+    --mark: #8dc4ae;
+    --mark-underline: #33574a;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--step);
+}
+
+/* --- hero --- */
+
+.hero { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.name {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 9vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.role {
+  margin: 0;
+  color: var(--grey);
+  max-width: var(--measure);
+}
+
+/* --- deliaca linka a štítok sekcie --- */
+
+.rule {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+  margin: 0.75rem 0 0;
+}
+
+.lbl {
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin: 1.25rem 0 0.25rem;
+}
+
+/* --- zoznam projektov --- */
+
+.list { display: flex; flex-direction: column; }
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 1.25rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.row h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.row h3 a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.row h3 a:hover { border-bottom-color: var(--ink); }
+
+.row p {
+  grid-column: 1;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--grey);
+  max-width: var(--measure);
+}
+
+.yr {
+  font-size: 0.8rem;
+  color: var(--grey);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* --- podstránky --- */
+
+.back { margin: 0; font-size: 0.85rem; }
+
+.back a {
+  color: var(--grey);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.back a:hover { color: var(--ink); }
+
+.page-title {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.meta {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--grey);
+}
+
+/* --- bežný text --- */
+
+.prose { max-width: var(--measure); }
+.prose p, .prose ul, .prose ol { margin: 0 0 1rem; }
+.prose h3 { font-size: 1.05rem; font-weight: 500; margin: 1.75rem 0 0.5rem; }
+.prose a { color: var(--mark); text-decoration: none; border-bottom: 1px solid var(--mark-underline); }
+.prose img { max-width: 100%; height: auto; border-radius: 4px; }
+
+.prose pre {
+  overflow-x: auto;
+  background: var(--rule);
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; }
+.prose pre code { font-size: inherit; }
+
+.cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--mark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--mark-underline);
+}
+
+.cta::after { content: " \2192"; }
+
+/* --- pätka --- */
+
+.foot { margin-top: 1.5rem; }
+
+.links { display: flex; flex-wrap: wrap; gap: 1.15rem; margin-top: 1.25rem; }
+
+.links a {
+  color: var(--mark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--mark-underline);
+  font-size: 0.9rem;
+}
+
+.links a:hover { border-bottom-color: var(--mark); }
+
+/* --- prístupnosť --- */
+
+a:focus-visible, :focus-visible {
+  outline: 2px solid var(--mark);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 30rem) {
+  .wrap { padding: 3rem 1.25rem 3rem; }
+  .row { grid-template-columns: 1fr; }
+  .row p { grid-column: auto; }
+}

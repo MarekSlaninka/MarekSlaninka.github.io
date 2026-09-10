@@ -1,0 +1,50 @@
+name: Build & deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Súbežné deploye zbytočne prepisujú jeden druhého; nový nech počká.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # macOS runner zámerne: Publish 0.9.0 je overený na macOS.
+    # Na ubuntu-latest by bol build rýchlejší a lacnejší, ale netestovaný.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache SwiftPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/.swiftpm
+          key: swiftpm-${{ runner.os }}-${{ hashFiles('Package.resolved') }}
+          restore-keys: swiftpm-${{ runner.os }}-
+
+      - name: Generate site
+        run: swift run
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: Output
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
